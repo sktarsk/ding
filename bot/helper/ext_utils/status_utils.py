@@ -185,7 +185,7 @@ def source(self):
 
 
 async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=1):
-    msg = ""
+    msg = "<b>Powered By TeamLeech</b>\n\n"
     button = None
 
     tasks = await get_specific_tasks(status, sid if is_user else None)
@@ -218,7 +218,6 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
         msg += f"<code>{escape(f'{task.name()}')}</code>"
         if task.listener.subname:
             msg += f"\n<i>{task.listener.subname}</i>"
-        msg += f"\nby: {source(task.listener)}"
         if (
             tstatus not in [MirrorStatus.STATUS_SEED, MirrorStatus.STATUS_QUEUEUP]
             and task.listener.progress
@@ -238,6 +237,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
             msg += f"\n<b>Size:</b> {task.size()}"
             msg += f"\n<b>Speed:</b> {task.speed()}"
             msg += f"\n<b>Estimated:</b> {task.eta()}"
+            msg += f"\nby: {source(task.listener)}"
             if (
                 tstatus == MirrorStatus.STATUS_DOWNLOAD and task.listener.is_torrent
             ) or task.listener.is_qbit:
